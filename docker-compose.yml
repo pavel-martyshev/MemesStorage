@@ -22,7 +22,7 @@ services:
       - "9000:9000"
       - "9001:9001"
     volumes:
-      - "/path/to/project/minio_data:/data"
+      - "/path/to/project/memesstorage/minio_data:/data"
     command: server /data --console-address ":9001"
   api:
     build: ./
@@ -32,5 +32,5 @@ services:
     ports:
       - "your_port:your_port"
     volumes:
-      - "/path/to/project/memes-storage/logs:/app/logs/"
+      - "/path/to/project/memesstorage/logs:/app/logs/"
 
