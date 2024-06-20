@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: pg_db
+    network_mode: host
+    environment:
+      POSTGRES_DB: "memes-storage"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "q1w2e3r4"
+    ports:
+      - "5432:5432"
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    network_mode: host
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: q1w2e3r4
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+  api:
+    build: ./
+    command: uvicorn app.main:app --host your_host --port your_port
+    container_name: memes-api
+    network_mode: host
+    ports:
+      - "your_port:your_port"
+    volumes:
+      - "/path/to/project/memes-storage/logs:/app/logs/"
+
